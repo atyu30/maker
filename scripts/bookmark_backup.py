@@ -85,29 +85,37 @@ class Browser():
     def backup_bookmark(self):
         firefox_bookmark = self.firefox_check()
         chrome_bookmark = self.chrome_check()
+        # 判断 Firefox,Chrome 是否真实存在
         source = [ firefox_bookmark, chrome_bookmark ]
-        target_dir = '/opt/backup/favorite/'
+        while '' in source:
+            source.remove('')
 
-        today = target_dir + time.strftime('%Y%m%d')
-        now = time.strftime('%H%M%S')
+        if source:
+            target_dir = '/opt/backup/favorite/'
 
-        '''检查备份目录是否存在'''
-        if not os.path.exists(target_dir) :
-            os.makedirs(target_dir)
-            print 'Successfully created directory', target_dir
+            today = target_dir + time.strftime('%Y%m%d')
+            now = time.strftime('%H%M%S')
 
-        if not os.path.exists(today) :
-            os.mkdir(today)
-            print 'Successfully created directory', today
+            '''检查备份目录是否存在'''
+            if not os.path.exists(target_dir) :
+                os.makedirs(target_dir)
+                print 'Successfully created directory', target_dir
 
-        target = today + os.sep + now + '.zip'
-        zip_command = "zip -qr \"%s\" \"%s\"" % (target, '\" \"'.join(source))
-        #zip_command = "zip -qr '%s' %s" % (target, ' '.join(source))
+            if not os.path.exists(today) :
+                os.mkdir(today)
+                print 'Successfully created directory', today
 
-        if os.system(zip_command) == 0 :
-            print 'Sucessful backup to', target
+            target = today + os.sep + now + '.zip'
+            zip_command = "zip -qr \"%s\" \"%s\"" % (target, '\" \"'.join(source))
+            #zip_command = "zip -qr '%s' %s" % (target, ' '.join(source))
+
+            if os.system(zip_command) == 0 :
+                print 'Sucessful backup to', target
+            else:
+                print 'Backup FAILED'
+
         else:
-            print 'Backup FAILED'
+            print "where is your browser?"
 
     def export_bookmark(self):
         pass
