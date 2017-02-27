@@ -60,7 +60,6 @@ class Browser():
 
     def firefox_check(self):
         firefox_path = self.testplatform()[0]
-        #firefox_path = "/Users/atyu30/Library/Application Support/Firefox"
         firefox_home_config = firefox_path + os.sep + "profiles.ini"
         config = ConfigParser.ConfigParser()
         config.readfp(open(firefox_home_config))
@@ -75,7 +74,6 @@ class Browser():
 
     def chrome_check(self):
         chrome_bookmark = self.testplatform()[1]
-        #chrome_bookmark = "/Users/atyu30/Library/Application Support/Google/Chrome/Default/Bookmarks"
         '''检查文件是否存在'''
         if not os.path.isfile(chrome_bookmark) :
             print 'Chrome favorite not found', chrome_bookmark
