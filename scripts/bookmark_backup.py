@@ -29,7 +29,7 @@ class Browser():
         self.home = os.path.expanduser('~')
 
 
-    def testplatform(self):
+    def check_platform(self):
         #获取操作系统名称及版本号
         sysstr = platform.platform()  
         if "Windows" in sysstr:
@@ -59,7 +59,7 @@ class Browser():
             return firefox_directories, chrome_directories
 
     def firefox_check(self):
-        firefox_path = self.testplatform()[0]
+        firefox_path = self.check_platform()[0]
         firefox_home_config = firefox_path + os.sep + "profiles.ini"
         config = ConfigParser.ConfigParser()
         config.readfp(open(firefox_home_config))
@@ -73,7 +73,7 @@ class Browser():
         return firefox_bookmark
 
     def chrome_check(self):
-        chrome_bookmark = self.testplatform()[1]
+        chrome_bookmark = self.check_platform()[1]
         '''检查文件是否存在'''
         if not os.path.isfile(chrome_bookmark) :
             print 'Chrome favorite not found', chrome_bookmark
@@ -105,7 +105,6 @@ class Browser():
 
             target = today + os.sep + now + '.zip'
             zip_command = "zip -qr \"%s\" \"%s\"" % (target, '\" \"'.join(source))
-            #zip_command = "zip -qr '%s' %s" % (target, ' '.join(source))
 
             if os.system(zip_command) == 0 :
                 print 'Sucessful backup to', target
